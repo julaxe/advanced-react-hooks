@@ -6,7 +6,10 @@ import * as React from 'react'
 function Counter({initialCount = 0, step = 32}) {
   //reducer function
   function countReducer(state, newState){
-    return ({...state, ...newState})
+    return {
+      ...state,
+      ...(typeof newState === 'function' ? newState(state) : newState)
+    }
   }
   const [state, setState] = React.useReducer(countReducer, {
     count: initialCount,
